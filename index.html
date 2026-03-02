@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册表单</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .submit-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>用户注册表单</h2>
+        <form id="registrationForm">
+            <div class="form-group">
+                <label for="name">姓名：</label>
+                <input type="text" id="name" name="name" placeholder="请输入您的姓名" required>
+            </div>
+            <div class="form-group">
+                <label for="email">邮箱：</label>
+                <input type="email" id="email" name="email" placeholder="请输入您的邮箱" required>
+            </div>
+            <div class="form-group">
+                <label for="password">密码：</label>
+                <input type="password" id="password" name="password" placeholder="请输入密码" required>
+            </div>
+            <div class="form-group">
+                <label>性别：</label>
+                <input type="radio" id="male" name="gender" value="男">
+                <label for="male">男</label>
+                <input type="radio" id="female" name="gender" value="女">
+                <label for="female">女</label>
+            </div>
+            <div class="form-group">
+                <label>爱好：</label>
+                <input type="checkbox" id="reading" name="hobbies[]" value="阅读">
+                <label for="reading">阅读</label>
+                <input type="checkbox" id="music" name="hobbies[]" value="音乐">
+                <label for="music">音乐</label>
+                <input type="checkbox" id="sports" name="hobbies[]" value="运动">
+                <label for="sports">运动</label>
+            </div>
+            <div class="form-group">
+                <label for="city">城市：</label>
+                <select id="city" name="city">
+                    <option value="">请选择城市</option>
+                    <option value="北京">北京</option>
+                    <option value="上海">上海</option>
+                    <option value="广州">广州</option>
+                    <option value="深圳">深圳</option>
+                    <option value="仙女镇">仙女镇</option>
+                    <option value="沭阳县">沭阳县</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="intro">简介：</label>
+                <textarea id="intro" name="intro" rows="4" placeholder="请简单介绍一下自己"></textarea>
+            </div>
+            <div class="form-group">
+                <button type="button" class="submit-btn" onclick="submitForm()">提交</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function submitForm() {
+            const formData = new FormData(document.getElementById('registrationForm'));
+
+            fetch('/submit.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert(data);
+                document.getElementById('registrationForm').reset();
+            })
+            .catch(error => {
+                console.error('错误:', error);
+                alert('提交失败，请重试。');
+            });
+        }
+    </script>
+</body>
+</html>
